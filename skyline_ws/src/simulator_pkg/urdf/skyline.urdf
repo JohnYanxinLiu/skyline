@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<!-- http://wiki.ros.org/urdf/XML/link  -->
+<robot name="skyline_robot">
+
+	<!-- Base link -->
+	<link name="link_base">
+		<visual>
+			<geometry>
+				<cylinder length="0.05" radius="0.2"/>
+			</geometry>
+			
+			<!--origin - the reference frame of the visul element with resppect to the reference frame of the link -->
+			<!-- rpy -r is roll, p-pitch, and y -yaw -->
+			<!-- xyz - x, y, z -offsets -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+			<material name = "yellow">
+				<color rgba="1 1 0 1"/>
+			</material>
+		</visual>
+	</link>
+
+
+<!-- Lazy Susan Yaw Joint -->
+	<!-- joint_susan_y -->
+	<joint name="joint_susan_y" type="revolute">
+		<parent link="link_base"/>
+		<child link="link_susan_y"/>
+			<origin xyz="0 0 0"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+	</joint>
+
+	<!-- link_susan -->
+	<link name="link_susan_y">
+	<visual>
+		<geometry>
+			<cylinder length="0.1" radius="0.1"/>
+		</geometry>
+			
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+		<material name = "blue">
+			<color rgba="0 0 1 1"/>
+		</material>
+	</visual>
+	</link>
+
+<!-- Lazy Susan Pitch Joint -->
+	<!-- joint_susan_pitch -->
+	<joint name="joint_susan_p" type="revolute">
+		<parent link="link_susan_y"/>
+		<child link="link_susan_p"/>
+			<origin xyz="0 0 0"/>
+			<axis xyz="0 2 0"/>
+			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+	</joint>
+
+	<!-- link_susan_pitch -->
+	<link name="link_susan_p">
+	<visual>
+		<geometry>
+			<cylinder length="2.2" radius="0.1"/>
+		</geometry>
+			
+		<origin rpy="0 0 0" xyz="0 0 1.1"/>
+		<material name = "purple">
+			<color rgba="1 0 1 1"/>
+		</material>
+	</visual>
+	</link>
+
+
+<!-- Mid Arm Joint -->
+	<!-- joint_mid -->
+	<joint name="joint_mid_p" type="revolute">
+		<parent link="link_susan_p"/>
+		<child link="link_mid_p"/>
+			<origin xyz="0 0 2.2"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+	</joint>
+
+	<!-- link_mid -->
+	<link name="link_mid_p">
+	<visual>
+		<geometry>
+			<cylinder length="2.2" radius="0.1"/>
+		</geometry>
+			
+		<origin rpy="0 0 0" xyz="0 0 1.1"/>
+		<material name = "green">
+			<color rgba="0 1 0 1"/>
+		</material>
+	</visual>
+	</link>
+
+<!-- Wrist Pitch Joint -->
+	<!-- joint_wrist_pitch -->
+	<joint name="joint_wrist_p" type="revolute">
+		<parent link="link_mid_p"/>
+		<child link="link_wrist_p"/>
+			<origin xyz="0 0 2.2"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+	</joint>
+
+	<!-- link_wrist_pitch -->
+	<link name="link_wrist_p">
+	<visual>
+		<geometry>
+			<cylinder length="0.3" radius="0.1"/>
+		</geometry>
+			
+		<origin rpy="0 0 0" xyz="0 0 0.15"/>
+		<material name = "red">
+			<color rgba="1 0 0 1"/>
+		</material>
+	</visual>
+	</link>
+
+<!-- Wrist Roll Joint -->
+	<!-- joint_wrist_roll -->
+	<joint name="joint_wrist_r" type="revolute">
+		<parent link="link_wrist_p"/>
+		<child link="link_wrist_r"/>
+			<origin xyz="0 0 0.25"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+	</joint>
+
+	<!-- link_wrist_roll -->
+	<link name="link_wrist_r">
+	<visual>
+		<geometry>
+			<box size="0.1 0.3 0.5" />
+		</geometry>
+			
+		<origin rpy="0 0 0" xyz="0 0 0.25"/>
+		<material name = "blue">
+			<color rgba="0 0 1 1"/>
+		</material>
+	</visual>
+	</link>
+
+
+</robot>
