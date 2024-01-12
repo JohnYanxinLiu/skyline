@@ -1,12 +1,46 @@
 <?xml version="1.0"?>
 <!-- http://wiki.ros.org/urdf/XML/link  -->
-<robot name="skyline_robot">
+<robot name="skyline_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- Macros -->
+	<!-- lengths -->
+	<xacro:property name="base_height" value = "1.0155" />
+	<xacro:property name="arm_length" value = "2.8455" />
+	<xacro:property name="wrist_length" value = "0.998302" />
+	<xacro:property name="claw_length" value = "1.534561" />
+	
+	<!-- pyshical limits -->
+	<xacro:macro name="joint_susan_y_limit">
+		<limit effort="300" velocity="2.0" lower="0" upper="${2*pi}" />
+	</xacro:macro>
+
+	<xacro:macro name="base_arm_limit">
+		<limit effort="300" velocity="2.0" lower="${-1*pi/2}" upper="${pi/2}" />
+	</xacro:macro>
+
+	<xacro:macro name="arm_joint_limit">
+		<limit effort="300" velocity="2.0" lower="0" upper="${pi}" />
+	</xacro:macro>
+
+	<xacro:macro name="wrist_pitch_limit">
+		<limit effort="300" velocity="2.0" lower="${-1*pi/2}" upper="${pi/2}" />
+	</xacro:macro>
+
+	<xacro:macro name="wrist_yaw_limit">
+		<limit effort="300" velocity="2.0" lower="${-1*pi/2}" upper="${pi/2}" />
+	</xacro:macro>
+
+	<!-- axis of rotations -->
+	<xacro:property name="yaw" value = "0 0 1" />
+	<xacro:property name="pitch" value = "0 1 0" />
+	<xacro:property name="roll" value = "1 0 0" />
+
 
 	<!-- Base link -->
 	<link name="link_base">
 		<visual>
 			<geometry>
-				<cylinder length="0.05" radius="0.2"/>
+				<cylinder length="0.1" radius="0.3"/>
 			</geometry>
 			
 			<!--origin - the reference frame of the visul element with resppect to the reference frame of the link -->
@@ -26,18 +60,18 @@
 		<parent link="link_base"/>
 		<child link="link_susan_y"/>
 			<origin xyz="0 0 0"/>
-			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+			<axis xyz="${yaw}"/>
+			<xacro:joint_susan_y_limit/>
 	</joint>
 
 	<!-- link_susan -->
 	<link name="link_susan_y">
 	<visual>
 		<geometry>
-			<cylinder length="0.1" radius="0.1"/>
+			<cylinder length="${base_height}" radius="0.1"/>
 		</geometry>
 			
-		<origin rpy="0 0 0" xyz="0 0 0"/>
+		<origin rpy="0 0 0" xyz="0 0 ${base_height/2}"/>
 		<material name = "blue">
 			<color rgba="0 0 1 1"/>
 		</material>
@@ -49,19 +83,19 @@
 	<joint name="joint_susan_p" type="revolute">
 		<parent link="link_susan_y"/>
 		<child link="link_susan_p"/>
-			<origin xyz="0 0 0"/>
-			<axis xyz="0 2 0"/>
-			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+			<origin xyz="0 0 ${base_height}"/>
+			<axis xyz="${pitch}"/>
+			<xacro:base_arm_limit/>
 	</joint>
 
 	<!-- link_susan_pitch -->
 	<link name="link_susan_p">
 	<visual>
 		<geometry>
-			<cylinder length="2.2" radius="0.1"/>
+			<cylinder length="${arm_length}" radius="0.1"/>
 		</geometry>
 			
-		<origin rpy="0 0 0" xyz="0 0 1.1"/>
+		<origin rpy="0 0 0" xyz="0 0 ${arm_length/2}"/>
 		<material name = "purple">
 			<color rgba="1 0 1 1"/>
 		</material>
@@ -74,19 +108,19 @@
 	<joint name="joint_mid_p" type="revolute">
 		<parent link="link_susan_p"/>
 		<child link="link_mid_p"/>
-			<origin xyz="0 0 2.2"/>
-			<axis xyz="0 1 0"/>
-			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+			<origin xyz="0 0 ${arm_length}"/>
+			<axis xyz="${pitch}"/>
+			<xacro:arm_joint_limit/>
 	</joint>
 
 	<!-- link_mid -->
 	<link name="link_mid_p">
 	<visual>
 		<geometry>
-			<cylinder length="2.2" radius="0.1"/>
+			<cylinder length="${arm_length}" radius="0.1"/>
 		</geometry>
 			
-		<origin rpy="0 0 0" xyz="0 0 1.1"/>
+		<origin rpy="0 0 0" xyz="0 0 ${arm_length/2}"/>
 		<material name = "green">
 			<color rgba="0 1 0 1"/>
 		</material>
@@ -98,19 +132,19 @@
 	<joint name="joint_wrist_p" type="revolute">
 		<parent link="link_mid_p"/>
 		<child link="link_wrist_p"/>
-			<origin xyz="0 0 2.2"/>
-			<axis xyz="0 1 0"/>
-			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
-	</joint>
+			<origin xyz="0 0 ${arm_length}"/>
+			<axis xyz="${pitch}"/>
+			<xacro:wrist_pitch_limit/>
+		</joint>
 
 	<!-- link_wrist_pitch -->
 	<link name="link_wrist_p">
 	<visual>
 		<geometry>
-			<cylinder length="0.3" radius="0.1"/>
+			<cylinder length="${wrist_length}" radius="0.1"/>
 		</geometry>
 			
-		<origin rpy="0 0 0" xyz="0 0 0.15"/>
+		<origin rpy="0 0 0" xyz="0 0 ${wrist_length/2}"/>
 		<material name = "red">
 			<color rgba="1 0 0 1"/>
 		</material>
@@ -121,20 +155,20 @@
 	<!-- joint_wrist_roll -->
 	<joint name="joint_wrist_r" type="revolute">
 		<parent link="link_wrist_p"/>
-		<child link="link_wrist_r"/>
-			<origin xyz="0 0 0.25"/>
-			<axis xyz="0 1 0"/>
-			<limit effort="300" velocity="2.0" lower="-1.6" upper="1.6" />
+		<child link="link_wrist_y"/>
+			<origin xyz="0 0 ${wrist_length}"/>
+			<axis xyz="${yaw}"/>
+			<xacro:wrist_yaw_limit/>
 	</joint>
 
 	<!-- link_wrist_roll -->
-	<link name="link_wrist_r">
+	<link name="link_wrist_y">
 	<visual>
 		<geometry>
-			<box size="0.1 0.3 0.5" />
+			<box size="0.1 0.3 ${claw_length}" />
 		</geometry>
 			
-		<origin rpy="0 0 0" xyz="0 0 0.25"/>
+		<origin rpy="0 0 0" xyz="0 0 ${claw_length/2}"/>
 		<material name = "blue">
 			<color rgba="0 0 1 1"/>
 		</material>

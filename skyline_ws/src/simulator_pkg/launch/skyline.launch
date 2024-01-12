@@ -2,7 +2,7 @@
 <launch>
 	<arg name="model" />
 	<param name= "robot_description"
-	textfile="$(find simulator_pkg)/urdf/skyline.urdf" />
+	command="xacro --inorder '$(find simulator_pkg)/urdf/skyline.urdf.xacro'" />
 
 <node name="joint_state_publisher_gui"
 pkg="joint_state_publisher_gui"

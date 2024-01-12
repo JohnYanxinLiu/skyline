@@ -87,7 +87,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        link_wrist_r:
+        link_wrist_y:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -108,15 +108,15 @@ Visualization Manager:
         link_base:
           Value: false
         link_mid_p:
-          Value: true
+          Value: false
         link_susan_p:
-          Value: true
+          Value: false
         link_susan_y:
-          Value: true
+          Value: false
         link_wrist_p:
-          Value: true
-        link_wrist_r:
-          Value: true
+          Value: false
+        link_wrist_y:
+          Value: false
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -129,7 +129,7 @@ Visualization Manager:
             link_susan_p:
               link_mid_p:
                 link_wrist_p:
-                  link_wrist_r:
+                  link_wrist_y:
                     {}
       Update Interval: 0
       Value: true
@@ -161,7 +161,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.2582273483276367
+      Distance: 15.648934364318848
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -169,9 +169,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.7602548003196716
-        Y: -1.0734710693359375
-        Z: 4.109533786773682
+        X: -1.7691023349761963
+        Y: 0.785533607006073
+        Z: 1.478594422340393
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
