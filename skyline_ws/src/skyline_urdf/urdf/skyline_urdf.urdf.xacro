@@ -3,7 +3,8 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="skyline_urdf">
+  name="skyline_urdf" 
+  xmlns:xacro="http://ros.org/wiki/xacro">
 
   <link name="world"/>
   
@@ -417,8 +418,8 @@
   </transmission>
 
   <gazebo>
-    <plugin name="control" filename="libgazebo_ros_control.so">
-    <robotNamespace>/sim</robotNamespace>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/Skyline</robotNamespace>
     </plugin>
   </gazebo>
 

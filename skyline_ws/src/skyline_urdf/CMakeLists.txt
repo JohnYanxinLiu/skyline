@@ -3,14 +3,13 @@ cmake_minimum_required(VERSION 2.8.3)
 project(skyline_urdf)
 
 find_package(catkin REQUIRED COMPONENTS
-    messages_generation
+    message_generation
     roscpp
     rospy
     std_msgs
     geometry_msgs
     urdf
     xacro
-    messages_generation
     )
 
 
