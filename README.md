@@ -2,13 +2,18 @@
 A Robot Arm to stack Jenga blocks
 
 
-Start:
-git clone TODO
-cd skyline/skyline_ws
-catkin_make
+To Get Started with the Simulator:
+`git clone git@github.com:JohnYanxinLiu/skyline.git`
+`cd skyline/skyline_ws`
+`catkin build`
 
-launch the simulator with
-roslaunch simulator_pkg skyline.launch
+launch the simulator with:
+`source /opt/ros/noetic/setup.bash`
+`roscore`
+In another terminal, run
+`source /opt/ros/noetic/setup.bash`
+`source skyline/skyline_ws/devel/setup.bash`
+`roslaunch simulator_pkg skyline.launch`
 
 Notes:
 - Followed [this tutorial] {https://www.youtube.com/watch?v=p9g-5OLhynA&list=PLeEzO_sX5H6TBD6EMGgV-qdhzxPY19m12} to create
